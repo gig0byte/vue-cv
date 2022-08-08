@@ -66,7 +66,6 @@ export default {
     },
 
     _cols() {
-      console.log(this.layout);
       return this._layouts[this.layout];
     },
   },
