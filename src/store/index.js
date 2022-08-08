@@ -36,7 +36,7 @@ export default new Vuex.Store({
           commit("SET_DATA", data);
         })
         .catch(oError => {
-          console.log(oError);
+          console.error(oError);
 
           commit("SET_ERROR", true);
         });
@@ -82,5 +82,6 @@ export default new Vuex.Store({
 
     experience: state => state.data.experience || [],
 
+    source: state => state.data?.sources?.vue || ""
   },
 })

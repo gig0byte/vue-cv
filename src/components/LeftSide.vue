@@ -50,13 +50,23 @@
             color="#4573aa"
             height="auto">
 
-            <v-btn text
-              color="white"
-              class="pa-0 ma-0">
-              <span v-text="'Source of page'" />
-            </v-btn>
+            <a v-if="source"
+              class="white--text"
+              :href="source"
+              target="_blank">
+              Source of page
+            </a>
 
             <v-spacer />
+
+            <a v-if="source"
+              class="white--text"
+              href="/"
+              target="_blank">
+              SAPUI5 Version
+            </a>
+
+            <v-spacer v-if="isMobile" />
 
             <v-btn v-if="isMobile"
               text
@@ -103,7 +113,7 @@ export default {
   }),
 
   computed: {
-    ...mapGetters(["contacts", "assets", "photo"]),
+    ...mapGetters(["contacts", "assets", "photo", "source"]),
   },
 
   methods: {
