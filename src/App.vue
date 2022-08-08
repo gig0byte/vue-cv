@@ -1,28 +1,59 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app style="height: 100vh">
+    <v-main>
+      <flexible-column-layout :layout="layout">
+        <template #master>
+          <left-side />
+        </template>
+
+        <template #detail>
+          <right-side />
+        </template>
+      </flexible-column-layout>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { mapGetters, mapMutations, mapActions } from "vuex";
+
+import FlexibleColumnLayout from "./components/FlexibleColumnLayout.vue";
+import LeftSide from "./components/LeftSide.vue";
+import RightSide from "./components/RightSide.vue";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
+  name: "App",
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+  components: {
+    LeftSide,
+    RightSide,
+    FlexibleColumnLayout,
+  },
+
+  computed: {
+    ...mapGetters(["appTitle", "layout"]),
+  },
+
+  methods: {
+    ...mapMutations(["SET_LAYOUT", "SET_ISMOBILE"]),
+
+    ...mapActions(["getData"]),
+  },
+
+  watch: {
+    appTitle(newVal) {
+      document.title = newVal;
+    },
+  },
+
+  created() {
+    this.getData();
+
+    let layout = this.$vuetify.breakpoint.smAndDown
+      ? "OneColumn"
+      : "TwoColumnsMidExpanded";
+
+    this.SET_LAYOUT(layout);
+  },
+};
+</script>
